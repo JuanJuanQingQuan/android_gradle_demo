@@ -1,0 +1,26 @@
+buildscript {
+
+    ext.SDK_VERSION=${TARGET_SDK_VERSION}
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.0'
+        classpath("com.guardsquare:proguard-gradle:7.2.1")
+    }
+}
+
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        jcenter()
+    }
+}

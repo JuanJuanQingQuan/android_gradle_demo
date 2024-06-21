@@ -1,0 +1,47 @@
+rootProject.name = "AndroidDemo"
+include ':app'
+include ':library'
+include ':plugin'
+rootProject.buildFileName = "build_test.gradle"
+
+gradle.settingsEvaluated {
+    println "gradle settingsEvaluated settings.gradle 解析完成之后被调用"
+}
+gradle.projectsLoaded {
+    println "gradle projectsLoaded 参与构建的 Project 对象创建完毕之后被调用"
+}
+gradle.beforeProject {
+    println "gradle beforeProject 每个Project执行build.gradle配置代码之前被调用"
+}
+gradle.projectsEvaluated {
+    println "gradle projectsEvaluated 所有Project都执行完对应的build.gradle配置代码，准备生成对应的Task依赖图"
+}
+gradle.taskGraph.whenReady {
+    println "gradle taskGraph whenReady Task 依赖关系已经建立完毕"
+}
+
+gradle.taskGraph.beforeTask {
+    println "gradle taskGraph beforeTask 每一个 Task 执行之前被调用"
+}
+
+gradle.taskGraph.afterTask {
+    println "gradle taskGraph afterTask 每一个 Task 执行之后被调用"
+}
+
+gradle.buildFinished {
+    println "gradle buildFinished 构建结束之后被调用"
+}
+
+gradle.addProjectEvaluationListener(
+        new ProjectEvaluationListener() {
+            //执行各个project的beforeEvaluate：在配置阶段完成
+            @Override
+            void beforeEvaluate(Project project) {
+                println "${project.name} beforeEvaluate在解析build.gradle文件前执行，写在build.gradle中时并不会执行"
+            }
+
+            //执行各个project的afterEvaluate：在配置阶段完成
+            @Override
+            void afterEvaluate(Project project, ProjectState projectState) {
+                println "${project.name} afterEvaluate在配置阶段结束之后，执行阶段之前被调用" }
+})

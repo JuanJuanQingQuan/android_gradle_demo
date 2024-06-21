@@ -1,0 +1,35 @@
+// 项目内直接写一个task
+task("my_test") {
+    doLast {
+        System.out.println("============== I'm a test task!!! ==============")
+    }
+    // beforeEvaluate在解析build.gradle文件前执行，写在build.gradle中时并不会执行
+    beforeEvaluate {
+        System.out.println("============== I'm a test task!!! beforeEvaluate ==============")
+    }
+
+    afterEvaluate {
+        System.out.println("============== I'm a test task!!! afterEvaluate ==============")
+    }
+}
+
+// 项目内直接写一个Plugin
+class GreetingPlugin implements Plugin<Project> {
+    void apply(Project project) {
+        project.task('hello') {
+            doLast {
+                println 'Hello from the build.gradle GreetingPlugin'
+            }
+        }
+        project.task('world') {
+            doLast {
+                println 'Hello World from the build.gradle GreetingPlugin'
+            }
+            dependsOn('my_test')
+            dependsOn('hello')
+        }
+    }
+}
+
+//使用plugin
+apply plugin:GreetingPlugin

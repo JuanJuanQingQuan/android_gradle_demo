@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.0'
+        classpath("com.guardsquare:proguard-gradle:7.2.1")
+        classpath("com.test.greeting:greeting:0.0.1")
+    }
+}
+
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+        jcenter()
+    }
+}
+
+//引入gradle
+apply from: './build_plugin.gradle'
